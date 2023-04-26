@@ -7,40 +7,53 @@ use App\Models\DataProvider;
 
 class DataProviderController extends Controller
 {
-    public function add(Request $request)
+    public function index()
     {
-        $dataProvider = new DataProvider();
-        $dataProvider->name = $request->name;
-        $dataProvider->url = $request->url;
-        $dataProvider->save();
-
-        return response()->json(['success' => true]);
+        $dataProviders = DataProvider::all();
+        return view('data-providers.index', compact('dataProviders'));
     }
 
-    public function edit(Request $request)
+    public function create()
     {
-        $dataProvider = DataProvider::find($request->id);
-        $dataProvider->name = $request->name;
-        $dataProvider->url = $request->url;
-        $dataProvider->save();
-
-        return response()->json(['success' => true]);
+        return view('data-providers.create');
     }
 
-    public function delete(Request $request)
+    public function store(Request $request)
     {
-        $dataProvider = DataProvider::find($request->id);
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'url' => 'required',
+        ]);
+
+        DataProvider::create($validatedData);
+
+        return redirect()->route('data-providers.index')
+            ->with('success', 'Data provider created successfully');
+    }
+
+    public function edit(DataProvider $dataProvider)
+    {
+        return view('data-providers.edit', compact('dataProvider'));
+    }
+
+    public function update(Request $request, DataProvider $dataProvider)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'url' => 'required',
+        ]);
+
+        $dataProvider->update($validatedData);
+
+        return redirect()->route('data-providers.index')
+            ->with('success', 'Data provider updated successfully');
+    }
+
+    public function destroy(DataProvider $dataProvider)
+    {
         $dataProvider->delete();
 
-        return response()->json(['success' => true]);
+        return redirect()->route('data-providers.index')
+            ->with('success', 'Data provider deleted successfully');
     }
-
-    public function getImage(Request $request)
-    {
-        $dataProvider = DataProvider::find($request->id);
-        $response = file_get_contents($dataProvider->url);
-
-        return response($response)->header('Content-Type', 'image/jpeg');
-    }
-
 }
