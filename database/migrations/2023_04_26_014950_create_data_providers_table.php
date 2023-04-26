@@ -15,6 +15,8 @@ class CreateDataProvidersTable extends Migration
     {
         Schema::create('data_providers', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('url');
             $table->timestamps();
         });
     }
