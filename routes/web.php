@@ -14,8 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::post('/data-providers/add', [DataProviderController::class, 'add'])->name('data-providers.add');
-Route::post('/data-providers/edit', [DataProviderController::class, 'edit'])->name('data-providers.edit');
-Route::post('/data-providers/delete', [DataProviderController::class, 'delete'])->name('data-providers.delete');
-
-Route::get('/data-providers/get-image/{id}', [DataProviderController::class, 'getImage'])->name('data-providers.getImage');
+Route::get('/providers', 'DataProviderController@index')->name('data-providers.index');
+Route::get('/providers/create', 'DataProviderController@create')->name('data-providers.create');
+Route::post('/providers', 'DataProviderController@store')->name('data-providers.store');
+Route::get('/providers/{id}/edit', 'DataProviderController@edit')->name('data-providers.edit');
+Route::put('/providers/{id}', 'DataProviderController@update')->name('data-providers.update');
+Route::delete('/providers/{id}', 'DataProviderController@destroy')->name('data-providers.destroy');

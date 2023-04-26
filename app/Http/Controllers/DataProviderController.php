@@ -10,12 +10,12 @@ class DataProviderController extends Controller
     public function index()
     {
         $dataProviders = DataProvider::all();
-        return view('data-providers.index', compact('dataProviders'));
+        return view('index', compact('dataProviders'));
     }
 
     public function create()
     {
-        return view('data-providers.create');
+        return view('create');
     }
 
     public function store(Request $request)
@@ -31,13 +31,15 @@ class DataProviderController extends Controller
             ->with('success', 'Data provider created successfully');
     }
 
-    public function edit(DataProvider $dataProvider)
+    public function edit($id)
     {
-        return view('data-providers.edit', compact('dataProvider'));
+        $dataProvider = DataProvider::findOrFail($id);
+        return view('edit', compact('dataProvider'));
     }
 
-    public function update(Request $request, DataProvider $dataProvider)
+    public function update(Request $request, $id)
     {
+        $dataProvider = DataProvider::findOrFail($id);
         $validatedData = $request->validate([
             'name' => 'required',
             'url' => 'required',
@@ -49,8 +51,9 @@ class DataProviderController extends Controller
             ->with('success', 'Data provider updated successfully');
     }
 
-    public function destroy(DataProvider $dataProvider)
+    public function destroy($id)
     {
+        $dataProvider = DataProvider::findOrFail($id);
         $dataProvider->delete();
 
         return redirect()->route('data-providers.index')
