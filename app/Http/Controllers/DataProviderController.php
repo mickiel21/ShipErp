@@ -59,4 +59,13 @@ class DataProviderController extends Controller
         return redirect()->route('data-providers.index')
             ->with('success', 'Data provider deleted successfully');
     }
+
+    public function getImage(Request $request)
+    {
+        $dataProvider = DataProvider::findOrFail($request->id);
+        return $dataProvider;
+        $response = file_get_contents($dataProvider->url);
+
+        return response($response)->header('Content-Type', 'image/jpeg');
+    }
 }

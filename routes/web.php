@@ -14,9 +14,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/providers', 'DataProviderController@index')->name('data-providers.index');
-Route::get('/providers/create', 'DataProviderController@create')->name('data-providers.create');
-Route::post('/providers', 'DataProviderController@store')->name('data-providers.store');
-Route::get('/providers/{id}/edit', 'DataProviderController@edit')->name('data-providers.edit');
-Route::put('/providers/{id}', 'DataProviderController@update')->name('data-providers.update');
-Route::delete('/providers/{id}', 'DataProviderController@destroy')->name('data-providers.destroy');
+Route::get('/data-providers', 'DataProviderController@index')->name('data-providers.index');
+Route::get('/data-providers/create', 'DataProviderController@create')->name('data-providers.create');
+Route::post('/data-providers', 'DataProviderController@store')->name('data-providers.store');
+Route::get('/data-providers/{id}/edit', 'DataProviderController@edit')->name('data-providers.edit');
+Route::put('/data-providers/{id}', 'DataProviderController@update')->name('data-providers.update');
+Route::delete('/data-providers/{id}', 'DataProviderController@destroy')->name('data-providers.destroy');
+
+//Api use to get the Image
+Route::get('/data-providers/get-image/{id}', 'DataProviderController@getImage')->name('data-providers.get-image');
